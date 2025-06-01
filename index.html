@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free VCC Generator | Virtual Credit Cards</title>
+    <title>VCC Generator | Virtual Credit Cards for Testing</title>
     <style>
         :root {
             --primary: #6c5ce7;
@@ -32,6 +32,9 @@
             color: white;
             padding: 1rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         
         .container {
@@ -69,247 +72,105 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
         }
         
         nav ul li a:hover {
-            opacity: 0.8;
+            background-color: rgba(255, 255, 255, 0.2);
         }
         
-        .hero {
-            padding: 4rem 0;
-            text-align: center;
+        nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.3);
         }
         
-        .hero h1 {
+        /* Page Content Styles */
+        .page-content {
+            padding: 3rem 0;
+            min-height: 60vh;
+        }
+        
+        .page-title {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             color: var(--dark);
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-        
-        .generator-box {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .card-preview {
-            background: linear-gradient(135deg, #2c3e50, #4ca1af);
-            border-radius: 10px;
-            padding: 1.5rem;
-            color: white;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-        }
-        
-        .card-preview::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-        
-        .card-preview::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            right: -20%;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-        }
-        
-        .card-brand {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .card-number {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
             text-align: center;
         }
         
-        .card-details {
+        /* FAQ Styles */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
-            margin-top: 2rem;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
         }
         
-        .card-holder, .card-expiry {
-            font-size: 0.9rem;
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
         }
         
-        .card-cvv {
-            position: absolute;
-            right: 2rem;
-            bottom: 1.5rem;
-            font-size: 0.9rem;
+        .faq-answer.show {
+            padding: 1.5rem;
+            max-height: 500px;
         }
         
-        .controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        /* Contact Form Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .control-group {
-            margin-bottom: 1rem;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
         
-        .control-group label {
+        .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #555;
         }
         
-        .control-group select, .control-group input {
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
-            background: white;
         }
         
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-align: center;
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
         }
         
-        .btn:hover {
-            background: #5649c0;
-            transform: translateY(-2px);
-        }
-        
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-        
-        .btn-danger {
-            background: var(--danger);
-        }
-        
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-        
-        .results {
-            display: none;
-            margin-top: 2rem;
-        }
-        
-        .result-card {
-            background: white;
-            border-radius: 5px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            font-family: 'Courier New', monospace;
-        }
-        
-        .result-card-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-        
-        .result-card-type {
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .result-card-body {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        
-        .result-card-item {
-            margin-bottom: 0.5rem;
-        }
-        
-        .result-card-item strong {
-            display: block;
-            color: #666;
-            font-size: 0.8rem;
-        }
-        
-        .features {
-            padding: 3rem 0;
-            background: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2rem;
-            color: var(--dark);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background: var(--light);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
+        /* Footer Styles */
         footer {
             background: var(--dark);
             color: white;
@@ -366,14 +227,7 @@
             z-index: 1000;
         }
         
-        .disclaimer {
-            background: #fff8e1;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 2rem 0;
-            border-left: 4px solid #ffc107;
-        }
-        
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -382,18 +236,17 @@
             
             nav ul {
                 margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             nav ul li {
-                margin: 0 0.5rem;
+                margin: 0.5rem;
             }
             
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .card-number {
-                font-size: 1.2rem;
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
         }
     </style>
@@ -407,172 +260,113 @@
                 <div class="logo">VCC<span>Generator</span></div>
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
-    
-    <section class="hero">
+
+    <!-- Main Content (Changes based on page) -->
+    <main class="page-content">
         <div class="container">
-            <h1>Free Virtual Credit Card Generator</h1>
-            <p>Generate unlimited virtual credit card numbers for testing and development purposes. Our cards pass Luhn validation but won't work for real transactions.</p>
-        </div>
-    </section>
-    
-    <section class="generator">
-        <div class="container">
-            <div class="generator-box">
-                <div class="card-preview">
-                    <div class="card-brand">PREMIUM CARD</div>
-                    <div class="card-number">•••• •••• •••• ••••</div>
-                    <div class="card-details">
-                        <div class="card-holder">CARDHOLDER NAME</div>
-                        <div class="card-expiry">••/••</div>
-                    </div>
-                    <div class="card-cvv">CVV: •••</div>
+            <!-- Home Page Content -->
+            <div id="home-page">
+                <h1 class="page-title">Free Virtual Credit Card Generator</h1>
+                <!-- Your existing card generator content goes here -->
+            </div>
+
+            <!-- Features Page Content -->
+            <div id="features-page" style="display: none;">
+                <h1 class="page-title">Our Features</h1>
+                <div class="features-grid">
+                    <!-- Your features content goes here -->
                 </div>
-                
-                <div class="controls">
-                    <div class="control-group">
-                        <label for="card-type">Card Type</label>
-                        <select id="card-type">
-                            <option value="visa">Visa</option>
-                            <option value="mastercard">Mastercard</option>
-                            <option value="amex">American Express</option>
-                            <option value="discover">Discover</option>
-                            <option value="jcb">JCB</option>
-                            <option value="diners">Diners Club</option>
-                        </select>
+            </div>
+
+            <!-- FAQ Page Content -->
+            <div id="faq-page" style="display: none;">
+                <h1 class="page-title">Frequently Asked Questions</h1>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What is a virtual credit card?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>A virtual credit card is a randomly generated card number that follows the same format as real credit cards but cannot be used for actual transactions. These are used for testing payment systems and software development.</p>
+                        </div>
                     </div>
                     
-                    <div class="control-group">
-                        <label for="country">Country</label>
-                        <select id="country">
-                            <option value="us">United States</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="ca">Canada</option>
-                            <option value="au">Australia</option>
-                            <option value="in">India</option>
-                            <option value="other">Other</option>
-                        </select>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Are these cards valid for real purchases?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, all cards generated on this site are for testing purposes only. They pass Luhn algorithm validation but will not work for real transactions.</p>
+                        </div>
                     </div>
                     
-                    <div class="control-group">
-                        <label for="bank">Bank</label>
-                        <select id="bank">
-                            <option value="any">Any Bank</option>
-                            <option value="chase">Chase</option>
-                            <option value="boa">Bank of America</option>
-                            <option value="citi">Citi</option>
-                            <option value="wells">Wells Fargo</option>
-                            <option value="hsbc">HSBC</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="controls">
-                    <div class="control-group">
-                        <label for="quantity">Number of Cards</label>
-                        <input type="number" id="quantity" min="1" max="20" value="1">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Who can use this tool?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>This tool is designed for developers testing payment gateways, QA testers verifying checkout processes, and businesses needing dummy payment data for training or demonstration purposes.</p>
+                        </div>
                     </div>
                     
-                    <div class="control-group">
-                        <label for="amount">Amount ($)</label>
-                        <input type="number" id="amount" min="0" placeholder="Optional">
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="expiry">Expiry Months</label>
-                        <input type="number" id="expiry" min="1" max="60" value="12" placeholder="Months from now">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is this service free?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, our basic card generation service is completely free. We may offer premium features in the future but will always maintain a free tier.</p>
+                        </div>
                     </div>
                 </div>
-                
-                <button id="generate-btn" class="btn btn-block">
-                    <i class="fas fa-credit-card"></i> Generate Virtual Cards
-                </button>
-                
-                <div class="disclaimer">
-                    <strong><i class="fas fa-exclamation-triangle"></i> Disclaimer:</strong> These card numbers are generated using the Luhn algorithm and are for testing purposes only. They will not work for actual transactions. This tool is intended for developers to test payment systems.
-                </div>
-                
-                <div class="results" id="results">
-                    <h3>Generated Virtual Credit Cards:</h3>
-                    <div id="result-container"></div>
-                    <button id="copy-all-btn" class="btn btn-block">
-                        <i class="fas fa-copy"></i> Copy All Cards
-                    </button>
-                    <button id="clear-all-btn" class="btn btn-block btn-danger">
-                        <i class="fas fa-trash"></i> Clear All
-                    </button>
+            </div>
+
+            <!-- Contact Page Content -->
+            <div id="contact-page" style="display: none;">
+                <h1 class="page-title">Contact Us</h1>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-block">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Features</h2>
-                <p>Why choose our VCC Generator</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Instant Generation</h3>
-                    <p>Generate unlimited virtual credit card numbers instantly with just one click.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Luhn Valid</h3>
-                    <p>All generated cards pass Luhn algorithm validation checks for testing purposes.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>100% Safe</h3>
-                    <p>Our cards cannot be used for real transactions, making them completely safe to use.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Developer Friendly</h3>
-                    <p>Perfect for developers testing payment gateways and e-commerce systems.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Multiple Countries</h3>
-                    <p>Generate cards from different countries to test geo-specific payment systems.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Responsive Design</h3>
-                    <p>Works perfectly on all devices from desktop to mobile phones.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
+    </main>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -584,23 +378,23 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-column" id="contact">
+                <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul>
                         <li><i class="fas fa-envelope"></i> support@vccgenerator.com</li>
@@ -616,294 +410,69 @@
     </footer>
     
     <div class="watermark">B4Brown</div>
-    
+
     <script>
+        // Simple page routing
         document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.getElementById('generate-btn');
-            const copyAllBtn = document.getElementById('copy-all-btn');
-            const clearAllBtn = document.getElementById('clear-all-btn');
-            const cardPreview = document.querySelector('.card-preview');
-            const cardNumber = document.querySelector('.card-number');
-            const cardExpiry = document.querySelector('.card-expiry');
-            const cardCvv = document.querySelector('.card-cvv');
-            const resultsSection = document.getElementById('results');
-            const resultContainer = document.getElementById('result-container');
+            // Get current page from URL
+            const path = window.location.pathname.split('/').pop() || 'index.html';
             
-            // Generate card on button click
-            generateBtn.addEventListener('click', generateCards);
-            
-            // Copy all cards
-            copyAllBtn.addEventListener('click', copyAllCards);
-            
-            // Clear all cards
-            clearAllBtn.addEventListener('click', clearAllCards);
-            
-            // Generate random cards
-            function generateCards() {
-                const cardType = document.getElementById('card-type').value;
-                const quantity = parseInt(document.getElementById('quantity').value);
-                const amount = document.getElementById('amount').value;
-                const expiryMonths = parseInt(document.getElementById('expiry').value);
-                
-                // Clear previous results
-                resultContainer.innerHTML = '';
-                
-                // Generate new cards
-                for (let i = 0; i < quantity; i++) {
-                    const card = generateCard(cardType, expiryMonths, amount);
-                    displayCard(card, i + 1);
-                }
-                
-                // Show results section
-                resultsSection.style.display = 'block';
-                
-                // Scroll to results
-                resultsSection.scrollIntoView({ behavior: 'smooth' });
-            }
-            
-            // Generate a single card
-            function generateCard(type, expiryMonths, amount) {
-                let cardNumber, cvv, expiry, cardLength, prefix;
-                
-                // Set card parameters based on type
-                switch(type) {
-                    case 'visa':
-                        prefix = '4';
-                        cardLength = 16;
-                        cvv = getRandomNumber(3);
-                        break;
-                    case 'mastercard':
-                        prefix = ['51', '52', '53', '54', '55'][Math.floor(Math.random() * 5)];
-                        cardLength = 16;
-                        cvv = getRandomNumber(3);
-                        break;
-                    case 'amex':
-                        prefix = ['34', '37'][Math.floor(Math.random() * 2)];
-                        cardLength = 15;
-                        cvv = getRandomNumber(4);
-                        break;
-                    case 'discover':
-                        prefix = '6011';
-                        cardLength = 16;
-                        cvv = getRandomNumber(3);
-                        break;
-                    case 'jcb':
-                        prefix = '35';
-                        cardLength = 16;
-                        cvv = getRandomNumber(3);
-                        break;
-                    case 'diners':
-                        prefix = ['300', '301', '302', '303', '304', '305', '36', '38', '39'][Math.floor(Math.random() * 9)];
-                        cardLength = prefix.length === 3 ? 14 : 16;
-                        cvv = getRandomNumber(3);
-                        break;
-                    default:
-                        prefix = '4';
-                        cardLength = 16;
-                        cvv = getRandomNumber(3);
-                }
-                
-                // Generate card number
-                cardNumber = generateCardNumber(prefix, cardLength);
-                
-                // Generate expiry date
-                expiry = generateExpiryDate(expiryMonths);
-                
-                return {
-                    type: type.toUpperCase(),
-                    number: formatCardNumber(cardNumber, type),
-                    expiry: expiry,
-                    cvv: cvv,
-                    amount: amount ? '$' + amount : 'N/A'
-                };
-            }
-            
-            // Generate card number with Luhn algorithm
-            function generateCardNumber(prefix, length) {
-                let cardNumber = prefix;
-                
-                // Generate remaining digits (except last one)
-                while (cardNumber.length < length - 1) {
-                    cardNumber += Math.floor(Math.random() * 10);
-                }
-                
-                // Calculate Luhn check digit
-                cardNumber += calculateLuhnCheckDigit(cardNumber);
-                
-                return cardNumber;
-            }
-            
-            // Calculate Luhn check digit
-            function calculateLuhnCheckDigit(partialCardNumber) {
-                let sum = 0;
-                let alternate = false;
-                
-                for (let i = partialCardNumber.length - 1; i >= 0; i--) {
-                    let digit = parseInt(partialCardNumber.charAt(i));
-                    
-                    if (alternate) {
-                        digit *= 2;
-                        if (digit > 9) {
-                            digit -= 9;
-                        }
-                    }
-                    
-                    sum += digit;
-                    alternate = !alternate;
-                }
-                
-                return (10 - (sum % 10)) % 10;
-            }
-            
-            // Format card number with spaces
-            function formatCardNumber(number, type) {
-                if (type === 'amex') {
-                    return number.replace(/(\d{4})(\d{6})(\d{5})/, '$1 $2 $3');
-                } else if (type === 'diners' && number.length === 14) {
-                    return number.replace(/(\d{4})(\d{6})(\d{4})/, '$1 $2 $3');
-                } else {
-                    return number.replace(/(\d{4})/g, '$1 ').trim();
-                }
-            }
-            
-            // Generate expiry date
-            function generateExpiryDate(monthsToAdd) {
-                const now = new Date();
-                const expiryDate = new Date(now);
-                expiryDate.setMonth(now.getMonth() + monthsToAdd);
-                
-                const month = (expiryDate.getMonth() + 1).toString().padStart(2, '0');
-                const year = expiryDate.getFullYear().toString().slice(-2);
-                
-                return `${month}/${year}`;
-            }
-            
-            // Generate random number with specified digits
-            function getRandomNumber(digits) {
-                const min = Math.pow(10, digits - 1);
-                const max = Math.pow(10, digits) - 1;
-                return Math.floor(min + Math.random() * (max - min + 1)).toString();
-            }
-            
-            // Display generated card
-            function displayCard(card, index) {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'result-card';
-                
-                cardElement.innerHTML = `
-                    <div class="result-card-header">
-                        <span class="result-card-type">${card.type} #${index}</span>
-                        <span>${card.amount}</span>
-                    </div>
-                    <div class="result-card-body">
-                        <div class="result-card-item">
-                            <strong>Card Number</strong>
-                            <span>${card.number}</span>
-                        </div>
-                        <div class="result-card-item">
-                            <strong>Expiry Date</strong>
-                            <span>${card.expiry}</span>
-                        </div>
-                        <div class="result-card-item">
-                            <strong>CVV</strong>
-                            <span>${card.cvv}</span>
-                        </div>
-                        <div class="result-card-item">
-                            <strong>Card Brand</strong>
-                            <span>${getCardBrandName(card.type)}</span>
-                        </div>
-                    </div>
-                    <button class="btn copy-card-btn" data-card="${escapeCardData(card)}">
-                        <i class="fas fa-copy"></i> Copy Card
-                    </button>
-                `;
-                
-                resultContainer.appendChild(cardElement);
-                
-                // Add click event to copy button
-                cardElement.querySelector('.copy-card-btn').addEventListener('click', function() {
-                    copyCardToClipboard(card);
-                });
-            }
-            
-            // Get full card brand name
-            function getCardBrandName(type) {
-                const brands = {
-                    'VISA': 'Visa',
-                    'MASTERCARD': 'Mastercard',
-                    'AMEX': 'American Express',
-                    'DISCOVER': 'Discover',
-                    'JCB': 'JCB',
-                    'DINERS': 'Diners Club'
-                };
-                return brands[type] || type;
-            }
-            
-            // Escape card data for HTML attribute
-            function escapeCardData(card) {
-                return JSON.stringify(card)
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#39;');
-            }
-            
-            // Copy card to clipboard
-            function copyCardToClipboard(card) {
-                const text = `Card Number: ${card.number}\nExpiry: ${card.expiry}\nCVV: ${card.cvv}\nType: ${getCardBrandName(card.type)}\nAmount: ${card.amount}`;
-                
-                navigator.clipboard.writeText(text).then(function() {
-                    alert('Card details copied to clipboard!');
-                }, function() {
-                    alert('Failed to copy card details. Please try again.');
-                });
-            }
-            
-            // Copy all cards to clipboard
-            function copyAllCards() {
-                const cards = [];
-                const cardElements = document.querySelectorAll('.result-card');
-                
-                cardElements.forEach(function(cardElement, index) {
-                    const type = cardElement.querySelector('.result-card-type').textContent.split(' #')[0];
-                    const number = cardElement.querySelector('.result-card-item:nth-child(1) span').textContent;
-                    const expiry = cardElement.querySelector('.result-card-item:nth-child(2) span').textContent;
-                    const cvv = cardElement.querySelector('.result-card-item:nth-child(3) span').textContent;
-                    const amount = cardElement.querySelector('.result-card-header span:nth-child(2)').textContent;
-                    
-                    cards.push(`Card #${index + 1} (${type}):\nNumber: ${number}\nExpiry: ${expiry}\nCVV: ${cvv}\nAmount: ${amount}\n`);
-                });
-                
-                navigator.clipboard.writeText(cards.join('\n')).then(function() {
-                    alert('All cards copied to clipboard!');
-                }, function() {
-                    alert('Failed to copy cards. Please try again.');
-                });
-            }
-            
-            // Clear all generated cards
-            function clearAllCards() {
-                resultContainer.innerHTML = '';
-                resultsSection.style.display = 'none';
-            }
-            
-            // Update card preview on type change
-            document.getElementById('card-type').addEventListener('change', function() {
-                const type = this.value;
-                const preview = document.querySelector('.card-preview');
-                
-                // Change card brand text
-                preview.querySelector('.card-brand').textContent = getCardBrandName(type.toUpperCase());
-                
-                // Change card appearance based on type
-                if (type === 'amex') {
-                    preview.style.background = 'linear-gradient(135deg, #0070ba, #154284)';
-                } else if (type === 'mastercard') {
-                    preview.style.background = 'linear-gradient(135deg, #f46b45, #eea849)';
-                } else if (type === 'discover') {
-                    preview.style.background = 'linear-gradient(135deg, #86a8e7, #91eae4)';
-                } else {
-                    preview.style.background = 'linear-gradient(135deg, #2c3e50, #4ca1af)';
-                }
+            // Hide all pages
+            document.querySelectorAll('[id$="-page"]').forEach(page => {
+                page.style.display = 'none';
             });
+            
+            // Show current page
+            if (path === 'index.html' || path === '') {
+                document.getElementById('home-page').style.display = 'block';
+            } else if (path === 'features.html') {
+                document.getElementById('features-page').style.display = 'block';
+                updateActiveNav('features.html');
+            } else if (path === 'faq.html') {
+                document.getElementById('faq-page').style.display = 'block';
+                setupFAQToggle();
+                updateActiveNav('faq.html');
+            } else if (path === 'contact.html') {
+                document.getElementById('contact-page').style.display = 'block';
+                updateActiveNav('contact.html');
+            } else {
+                document.getElementById('home-page').style.display = 'block';
+            }
+            
+            // Update active navigation link
+            function updateActiveNav(activePage) {
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === activePage) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // FAQ toggle functionality
+            function setupFAQToggle() {
+                const questions = document.querySelectorAll('.faq-question');
+                questions.forEach(question => {
+                    question.addEventListener('click', () => {
+                        const answer = question.nextElementSibling;
+                        const icon = question.querySelector('i');
+                        
+                        answer.classList.toggle('show');
+                        icon.classList.toggle('fa-chevron-down');
+                        icon.classList.toggle('fa-chevron-up');
+                    });
+                });
+            }
+            
+            // Contact form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    this.reset();
+                });
+            }
         });
     </script>
 </body>
